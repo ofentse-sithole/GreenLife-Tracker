@@ -1,0 +1,50 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Builder.Extensions;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Initialize Firebase
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromJson(@"{
+        ""type"": ""service_account"",
+        ""project_id"": ""greenlifetracker"",
+        ""private_key_id"": ""54cb7a79258d89dbfe7afb987208e3baa251cb94"",
+        ""private_key"": ""-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDKqIpbPgQOhuZa\nkFcYKb8TFmADYpHBq7D0O+cUkG9lyumlQsJauYSgmKXxN1upZC3GIQIiasEwOg5s\n5ScnfDzBmn+PB3uJlULsOwNR0Km/R7KZbofUiWVJ9NAoFYRoVOnQdfSizV/Qbr52\nJvulzRt1rZoxq8cruP+aTjLrKRwr7692Pe0MGT+GSZuLNmH5RhbVVQesqr1MLgym\nsKzttyrNf3+47joELY/oOlZcGQDG91d6envolxnsJ3LtlvVo5ehWtjNW7lk5u+Vc\nMTANr4iIlEcJeGnxx/dSdWNqEUg+JSMMbEhePE6EFrn8brm08Y3NIc6hHsJbbPwL\nPZBOZPZVAgMBAAECggEADuax9v/fhtKWzn2YLH/T+7XPTSsVbOhQbxeWfVXEyHcm\nkzm467iCDthFNLAtg7jeKsLTktnxpuJQnDjZ66vVayY5OeLtdlIsz7eOc24Z2nri\n9X2B7E1GpCz66e+cbZrMxGtf7QvtKc4ddWJBalFjXarsUGRWlUREOxbZOfRVt3SF\nwa2+nrX1fsv1pOTOj1qimDtONOsLmgHZXtMiR7SwUrf4l/beTLbDr+1uUE9+Iics\nT0V0nyLeQr2mHOiwm1R71U4If9Sidr09/HQZPW64NhhCl5hv9Ych0gq7CpLjKSBq\nXVFvw1u3TwY3vUJtTJrhhvhCM36VdL/tlF5d+iHQswKBgQD9lUwl6bWfRUw6j/Rt\nKcfYwD/pMjq7YQJEd24oJ1TYOQa5kmInY7+ZBEi9MUlW6KukngzwIBLqmuUq9meI\nfQG1tPZ9hgoBPreU95ncri/R5sUrCDJGj4XPAk1gK80X48Lnw89Wd4YsKqNnuKf/\nXv0jZLbk4VCulMj1T7NaeGMTWwKBgQDMlv6Zu42KGJc2xc7Isw+aki3g50t03oeo\nu/qFHrJu8dmGQOz561LJlRddu/VrrYvSiQjIW8UuBNfzV+jbaUv39TBIjd4oHOQH\nWDwt/TqU2Hwi1tWgKszQCW9838vgBwkbLw2Hq9LZIWuGSLnMNekue2mMoCUmzbHd\nlJfjqSC8DwKBgHqiTxcutST3UGwp3h1EzV8nakEOh5TCz2PpFh7ZFpES0wu/nTRL\nawdHKR5FzZ/4GbocrUkbWcqXaiiizWMWgVMs1t/RiNkdSY8DRyeQHZQ3NDchWZ8C\nHcYE6QKPbDoXbdTDv2ujlgGaBThN9wDrISSSulhqFqi3T5BDIQupmNBtAoGAI/f/\n9wM0VS0RmL2aJ0rj2WcNzdacO4XMD+xMlQ7ajArVFXdgsmee/HXLz9z1vuKaDH+v\nHZqUxgxv8wZnl/uhMYzX2kmm3yKFLI1ktykoHXcaC/39PNWJgKHICgpGi7Jw9WiG\nVm3s+eOYRdmPYMmxn0xvOBwHrBTJyo0PTyUy7h0CgYEAzdxUD29CPODoDnLlXHHu\n9wuwdH2Lp6t3pPwf2baNiOsQz1trmw9InX5bZwqCmjSeazgHe+n0MSkiwMxBzxxY\nGdElbuIi+E7yjs+VfJhGETBSz1erqzKIAJ7XQ1h9TYTjleAEZXlPQby0dfrzl2t/\nCyGYpCJXQplDIZsUXKNbnTo=\n-----END PRIVATE KEY-----\n"",
+        ""client_email"": ""firebase-adminsdk-lt2zm@greenlifetracker.iam.gserviceaccount.com"",
+        ""client_id"": ""104130211504047254494"",
+        ""auth_uri"": ""https://accounts.google.com/o/oauth2/auth"",
+        ""token_uri"": ""https://oauth2.googleapis.com/token"",
+        ""auth_provider_x509_cert_url"": ""https://www.googleapis.com/oauth2/v1/certs"",
+        ""client_x509_cert_url"": ""https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-lt2zm%40greenlifetracker.iam.gserviceaccount.com"",
+        ""universe_domain"": ""googleapis.com""
+        }"
+    ),
+});
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

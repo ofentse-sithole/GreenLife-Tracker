@@ -1,0 +1,191 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout= "~/Views/Shared/_Layout.cshtml";
+}
+<div class="bmi" align="center">
+    <h1>BMI Calculator</h1>
+
+    <form id="bmiForm">
+        <br/>
+        <label for="weight">Weight (kg):</label>
+        <input type="text" id="weight" name="weight" required>
+        <br/>
+        <br />
+        <label for="height">Height (m):</label>
+        <input type="text" id="height" name="height" required>
+        <br/>
+        <br />
+        <button type="button" onclick="calculateBMI()">Calculate BMI</button>
+    </form>
+
+    <br/>
+        <h2>BMI Result:</h2>
+        <p id="bmiResult"></p>
+
+<!-- Progress bar element -->
+    <div>
+        <label for="bmiProgressBar">BMI Progress:</label>
+        <progress id="bmiProgressBar" max="50"></progress>
+        <br/>
+        <br />
+        <div id="bmiLabels"></div>
+        </div>
+</div>
+
+<br/>
+<div class="terminology">
+    <h1 align="center">Gym Terminlogy</h1>
+    <br/>
+    <p>Sets :</p>
+    <ul>
+        <li>A set is a group of repetitions performed consecutively without resting.</li>
+        <li>Sets are typically separated by a rest period to allow the muscles to recover partially before the next set.</li>
+        <li>For example, if you do 10 push-ups, rest for a short period, and then do another 10 push-ups, you've completed two sets of push-ups.</li>
+    </ul>
+
+    <br/>
+    <p>Reps (Reptition): </p>
+    <ul>
+        <li>A repetition, or rep, is a single complete movement of a particular exercise.</li>
+        <li>The number of reps in a set indicates how many times you perform the specific exercise without taking a break.</li>
+        <li>For instance, if you perform a bicep curl from the starting position to the top position and back down, that's one repetition.</li>
+    </ul>
+
+    <br/>
+    <p>Superset: </p>
+    <ul>
+        <li>Performing two exercises back-to-back with little to no rest in between.</li>
+    </ul>
+
+    <br/>
+    <p>High-Intensity Interval Training (HIIT):</p>
+    <ul>
+        <li>A training technique involving short bursts of intense exercise followed by periods of rest or lower-intensity activity.</li>
+    </ul>
+
+    <br />
+    <p>Low-Intensity Interval Training (LIIT):</p>
+    <ul>
+        <li>Alternating between periods of gentle exercise and rest, providing a less intense but sustained cardiovascular workout.</li>
+    </ul>
+
+    <br />
+    <p>Spotter:</p>
+    <ul>
+        <li>A person who assists during weightlifting exercises, ensuring safety.</li>
+    </ul>
+
+    <br />
+    <p>Warm-Up:</p>
+    <ul>
+        <li> Light exercises performed before a workout to prepare the body.</li>
+    </ul>
+
+    <br />
+    <p>Cooldown:</p>
+    <ul>
+        <li>Gentle exercises done after a workout to gradually bring the heart rate back to normal.</li>
+    </ul>
+
+    <br />
+    <p>BMI (Body Mass Index):</p>
+    <ul>
+        <li>A measure of body fat based on height and weight.</li>
+    </ul>
+
+    <br />
+    <p>Plateau:</p>
+    <ul>
+        <li>A point where progress in fitness or strength levels off.</li>
+    </ul>
+</div>
+
+<br/>
+<div class="muscle-groups" >
+    <h1 align="center">Muscle Groups</h1>
+    <br/>
+    <p>
+        Muscle groups refer to specific sets of muscles that work together to 
+        perform a particular movement or function. 
+        The human body is composed of various muscle groups, each responsible 
+        for specific actions.
+    </p>
+    <br />
+    <p><b>Muscle Groups:</b></p>
+    <ul>
+        <li>Chest Muscles</li>
+        <li>Back Muscles</li>
+        <li>Shoulder Muscles</li>
+        <li>Arm Muscles</li>
+        <li>Leg Muscles</li>
+        <li>Abodminal Muscles</li>
+        <li>Hip Muscles</li>
+        <li>Core Muscles</li>
+    </ul>
+
+    <br/>
+    <p>Understanding the different muscle groups is essential for designing effective workout routines. 
+        Targeting specific muscle groups allows individuals to focus on their fitness goals, whether 
+        it's building strength, increasing endurance, or improving overall muscle tone. Additionally, 
+        balanced training that addresses all major muscle groups contributes to overall functional 
+        fitness and reduces the risk of muscular imbalances and injuries.
+    </p>
+    
+</div>
+
+
+
+<!--Java Script Calculations for BMI-->
+<script>
+    function calculateBMI() {
+        // Get values from input fields
+        var weight = parseFloat(document.getElementById('weight').value);
+        var height = parseFloat(document.getElementById('height').value);
+
+        // Check if the input values are valid numbers
+        if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+            alert("Please enter valid values for weight and height.");
+            return;
+        }
+
+        // Calculate BMI
+        var bmi = weight / (height * height);
+
+        // Display the BMI result
+        document.getElementById('bmiResult').innerText = "BMI: " + bmi.toFixed(2);
+
+        // Update the progress bar value based on BMI
+        var progressBar = document.getElementById('bmiProgressBar');
+        progressBar.value = bmi > 30 ? 30 : bmi; // Cap the value at 30 for demonstration purposes
+
+        // Display labels and apply color to the progress bar based on BMI ranges
+        var bmiLabels = document.getElementById('bmiLabels');
+        var progressBarColor = getProgressBarColor(bmi);
+        bmiLabels.innerHTML = getBMILabels(bmi);
+        progressBar.style.backgroundColor = progressBarColor;
+    }
+
+    function getBMILabels(bmi) {
+        if (bmi < 18.5) {
+            return "BMI Range: Underweight (less than 18.5)";
+        } else if (bmi >= 18.5 && bmi < 25) {
+            return "BMI Range: Normal (18.5 - 24.9)";
+        } else if (bmi >= 25 && bmi < 30) {
+            return "BMI Range: Overweight (25 - 29.9)";
+        } else {
+            return "BMI Range: Obese (30 or more)";
+        }
+    }
+
+    function getProgressBarColor(bmi) {
+        if (bmi < 18.5) {
+            return "blue"; // Color for Underweight
+        } else if (bmi >= 18.5 && bmi < 25) {
+            return "green"; // Color for Normal
+        } else if (bmi >= 25 && bmi < 30) {
+            return "yellow"; // Color for Overweight
+        } else {
+            return "red"; // Color for Obese
+        }
+    }
+</script>

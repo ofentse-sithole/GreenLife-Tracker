@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GreenLife Tracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GreenLife_Tracker.styles.css" asp-append-version="true" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+
+    @*Style sheet for icons*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light" style="background-color: #4CAF50 ; border-bottom: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 3px;">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GreenLife Tracker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a>
+                        </li>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="allocationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Exercises
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="allocationDropdown">
+                                <a class="dropdown-item" href="/Exercises/Chest">Chest</a>
+                                <a class="dropdown-item" href="/Exercises/Shoulder">Shoulder</a>
+                                <a class="dropdown-item" href="/Exercises/Bicep">Bicep</a>
+                                <a class="dropdown-item" href="/Exercises/Back">Back</a>
+                                <a class="dropdown-item" href="/Exercises/Tricep">Tricep</a>
+                                <a class="dropdown-item" href="/Exercises/Forearm">Forearm</a>
+                                <a class="dropdown-item" href="/Exercises/Abs">Abs</a>
+                                <a class="dropdown-item" href="/Exercises/Legs">Legs</a>
+                            </div>
+                        </div>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="DietChanges">Diet Plan</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Tips">Tips</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - GreenLife_Tracker by Ofentse Sithole
+        </div>
+    </footer>
+    <br/>
+    <br/>
+    <br/>
+
+    @*Wave SVG*@
+    <svg xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         viewBox="0 24 150 28"
+         preserveAspectRatio="none">
+        <defs>
+            <path id="gentle-wave"
+                  d="M-160 44c30 0
+        58-18 88-18s
+        58 18 88 18
+        58-18 88-18
+        58 18 88 18
+        v44h-352z" />
+        </defs>
+        <g class="waves">
+            <use xlink:href="#gentle-wave"
+                 x="50"
+                 y="0"
+                 fill="#03ffff"
+                 fill-opacity=".2" />
+            <use xlink:href="#gentle-wave"
+                 x="50"
+                 y="3"
+                 fill="#03ffff"
+                 fill-opacity=".5" />
+            <use xlink:href="#gentle-wave"
+                 x="50"
+                 y="6"
+                 fill="#03ffff"
+                 fill-opacity=".9" />
+        </g>
+    </svg>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

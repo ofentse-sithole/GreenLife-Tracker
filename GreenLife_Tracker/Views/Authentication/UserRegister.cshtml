@@ -1,0 +1,149 @@
+﻿
+@{
+ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutWithoutMenu.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+    <!-- Add Bootstrap CSS and JavaScript links -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="register-bg">
+    
+        <!-- Animation of Lottie -->
+        @*<div id="lottie" align="left"></div>*@
+        <br />
+        <h1 class="text-center">Registration</h1>
+        <form id="register-form">
+            <div class="form-group">
+            <label for="name" class="col-md-2 control-label">First Name:</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group">
+            <label for="surname" class="col-md-2 control-label">Last Name:</label>
+                <input type="text" class="form-control" id="surname" name="surname">
+            </div>
+            <div class="form-group">
+            <label for="phoneNumber" class="col-md-2 control-label">Phone Number:</label>
+                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber">
+            </div>
+            <div class="form-group">
+            <label for="email" class="col-md-2 control-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+            <label for="password" class="col-md-2 control-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="form-group">
+            <label for="confirmPassword" class="col-md-2 control-label">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+       
+        <br/>
+    <!-- Link to register page -->
+    <p>
+        Already have an account? <a href="/Authentication/UserLogin">Login</a>
+    </p>
+
+    <!-- Add Lottie library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+
+
+    <!-- Animation of Lottie -->
+    <script>
+        var animation = bodymovin.loadAnimation({
+            container: document.getElementById('lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://lottie.host/a862ef0c-4059-41e4-a101-7f6e985dfa70/UVto8HAgLz.json'
+        });
+
+        // Set specific dimensions for the 'lottie' div
+        document.getElementById('lottie').style.width = '200px';  // Adjust the width as needed
+        document.getElementById('lottie').style.height = '200px'; // Adjust the height as needed
+
+    </script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <!-- Add Bootstrap JavaScript link (if needed) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script>
+        // Include your actual Firebase configuration (the config file is on the firebase folder)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLf-McAvSzFElpAF4k9gC4-WwRO8rYhAI",
+            authDomain: "greentracker-95eb1.firebaseapp.com",
+            projectId: "greentracker-95eb1",
+            storageBucket: "greentracker-95eb1.appspot.com",
+            messagingSenderId: "33891263588",
+            appId: "1:33891263588:web:a0b3fc173e8bfcb6e2eb71"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const registerForm = document.getElementById('register-form');
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = registerForm['name'].value;
+            const surname = registerForm['surname'].value;
+            const phoneNumber = registerForm['phoneNumber'].value;
+            const email = registerForm['email'].value;
+            const password = registerForm['password'].value;
+            const confirmPassword = registerForm['confirmPassword'].value;
+
+            if (name === "" || surname === "" || phoneNumber === "" || email === "" || password === "" || confirmPassword === "") {
+                alert("Please fill in all the fields.");
+            } else if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+            } else {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+
+                        db.collection("users").doc(user.uid).set({
+                            name: name,
+                            surname: surname,
+                            phoneNumber: phoneNumber,
+                            email: email,
+                            password: password,
+                        })
+                            .then(() => {
+                                alert("Registration successful!");
+                                window.location.href = "/Authentication/UserLogin";
+                            })
+                            .catch((error) => {
+                                console.error("Error adding document: ", error);
+                            });
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(errorCode);
+                        console.log(errorMessage);
+                    });
+            }
+        });
+    </script>
+
+    
+</body>
+</html>
