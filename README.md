@@ -39,6 +39,7 @@ Exercise offers a range of benefits such as strength, disease prevention, mood i
 - Get 7 to 8 hours of sleep for muscle recovery and overall health.
 
 ##UI Features
+
 -LottieFiles
 - SVG
 
