@@ -6,6 +6,9 @@ Welcome to GreenLife Tracker, your comprehensive companion on the journey toward
 
 Our innovative platform empowers you to monitor and manage your personal carbon footprint with ease, covering key aspects such as lifestyle choices, transportation habits, and energy consumption. Gain insights into your daily choices and discover opportunities for sustainable living.
 
+## Database
+ Firebase Authentication & Firestore
+
 ## Features
 
 ### 1. Monitoring and Knowing
